@@ -56,9 +56,14 @@ Use the higher-order function called getYears to do the following:
 2. Receive a callback function as the second parameter that will take getFinals from task 2 as an argument
 3. Return an array called years containing all of the years in the getFinals data set*/
 
-function getYears(/* code here */) {
-    /* code here */
-}
+function getYears(array, callback) {
+    array.push(callback.map((item, index) => item.Year))
+    return array
+  function getYears(array, cb) {
+    const years =  cb(array).map(function(item){
+         return item.Year;
+      });
+      return years;
 
 
 
@@ -70,8 +75,17 @@ Use the higher-order function getWinners to do the following:
 💡 HINT: Don't worry about ties for now (Please see the README file for info on ties for a stretch goal.)
 4. Returns the names of all winning countries in an array called `winners` */ 
 
-function getWinners(/* code here */) {
-    /* code here */
+function getWinners(array, callback) {
+    const winners = callback(array).map(function(item){
+        if(item['Home Team Goals'] > item['Away Team Goals']){
+            return item['Home Team Name'];
+        }
+        else {
+            return item['Away Team Name'];
+        }
+
+    });
+    return winners;
 }
 
 
@@ -87,9 +101,14 @@ Use the higher-order function getWinnersByYear to do the following:
 💡 HINT: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
-}
+function getWinnersByYear(array, getFinalscb, getYearscb, getWinnerscb) {
+    const allFinals = getFinalscb(array, getFinals);
+    const winners  = getWinnerscb(array, getFinals);
+    const years = getYearscb(array, getFinals);
+    return winners.map((item, index) `In ${years[index]}, ${item} won the world cup!`
+    )}
+
+console.log(getWinnersByYear(fifaData, getFinals, getYears, getWinners));
 
 
 
@@ -106,9 +125,7 @@ Use the higher order function getAverageGoals to do the following:
  
 */
 
-function getAverageGoals(/* code here */) {
-    /* code here */
- }
+
 
 
 
